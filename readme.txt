@@ -26,3 +26,6 @@ Requirements:
  * Enables multilingual BuddyPress components
  * Filters all links to maintain right language selection
  * Allows translation of profile fields
+ 
+= Bug issues =
+ * Do not use 404 to 301 plugin

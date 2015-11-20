@@ -21,21 +21,17 @@ function bpg_init() {
 		
 		// Always on frontend
         if ( !is_admin() || $apply_filters ) {
-            include_once dirname( __FILE__ ) . '/includes/class.filters.php';
             $optionLanguages = wpgl_get_option_language();
             $defaultLanguage = wpgl_get_default_language($optionLanguages);
             $currentLanguage = wpgl_get_current_language($optionLanguages);
-            
-            // Verbose page rewrite rules
-            if ( !defined( 'BPGL_USE_VERBOSE_PAGE_RULES' ) || BPGL_USE_VERBOSE_PAGE_RULES ) {
-                add_action( 'init', 'bpgl_use_verbose_rules' );
-                add_filter( 'page_rewrite_rules', 'bpgl_page_rewrite_rules_filter' );
-                add_filter( 'rewrite_rules_array', 'bpgl_rewrite_rules_array_filter' );
+            if($currentLanguage != $defaultLanguage){
+                apply_filters( 'bp_get_groups_directory_permalink', trailingslashit( bp_get_groups_directory_permalink() . $currentLanguage . '/' ));
+                apply_filters( 'bp_get_activity_directory_permalink', trailingslashit( bp_get_activity_directory_permalink() . $currentLanguage . '/' ));
+                apply_filters( 'bp_get_blogs_directory_permalink', trailingslashit( bp_get_blogs_directory_permalink() . $currentLanguage . '/' ));
+                apply_filters( 'bp_get_forum_directory_permalink', trailingslashit( bp_get_forum_directory_permalink() . $currentLanguage . '/' ));
+                apply_filters( 'bp_get_members_directory_permalink', trailingslashit( bp_get_members_directory_permalink() . $currentLanguage . '/' ));
             }
         }
-
-        // XProfile
-        include_once dirname( __FILE__ ) . '/includes/class.xprofile.php';
 		
 	} else if ( is_admin() ) {
         add_action( 'admin_notices', 'bpgl_admin_notice_required_plugins' );
